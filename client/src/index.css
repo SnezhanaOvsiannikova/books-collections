@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  padding: 15px;
+  font-family: sans-serif;
+  background: #E2D4B7;
+}
+.fa-pencil-alt {
+  color: #A4A9AD;
+}
+.fa-pencil-alt:hover {
+  color: #9c9583;
+}
+.fa-trash-alt:hover {
+  color: #ac5b5b;
+}
+.fa-trash-alt {
+  color: #E2D4B7;
+}
+button:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+button:focus {
+  outline: none;
+}
+.fas:hover,
+.far:hover {
+  cursor: pointer;
+}
