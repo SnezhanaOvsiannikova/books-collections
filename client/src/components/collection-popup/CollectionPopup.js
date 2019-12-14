@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import CollectionPopupContent from "../collectionPopupContent/CollectionPopupContent";
-import BookPopupContent from "../bookPopupContent/BookPopupContent";
-import { editCollection } from "../../actions";
+import { addNewCollection, editCollection } from "../../actions/collections";
 
 const PopupWrapper = styled.div`
   position: fixed;
@@ -57,30 +56,44 @@ const CloseIcon = styled.i`
   top: 2%;
 `;
 
-const PopupComponent = ({
+const CollectionPopup = ({
   isEditing,
-  isCollection,
-  isBook,
   setIsShowPopup,
-  currentCollectionData
+  currentData
 }) => {
   const [collectionName, setCollectionName] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
   const dispatch = useDispatch();
 
-  const sendNewData = ({
-    currentCollectionData,
+  const editCollectionData = ({
+    currentData,
     collectionName,
     collectionDescription,
     setIsShowPopup
   }) => {
     dispatch(
-      editCollection(currentCollectionData._id, {
-        name: collectionName,
-        description: collectionDescription
+      editCollection(currentData._id, {
+        name: collectionName || currentData.name,
+        description: collectionDescription || currentData.description
       })
     );
     setIsShowPopup(false);
+  };
+
+  const addNewCollectionData = ({
+    collectionName,
+    collectionDescription,
+    setIsShowPopup
+  }) => {
+    if (collectionName && collectionDescription) {
+      dispatch(
+        addNewCollection({
+          name: collectionName,
+          description: collectionDescription
+        })
+      );
+      setIsShowPopup(false);
+    }
   };
 
   return (
@@ -90,24 +103,26 @@ const PopupComponent = ({
           className="fas fa-times"
           onClick={() => setIsShowPopup(false)}
         ></CloseIcon>
-        {isCollection ? (
-          <CollectionPopupContent
-            data={currentCollectionData}
-            setCollectionName={setCollectionName}
-            setCollectionDescription={setCollectionDescription}
-          />
-        ) : (
-          <BookPopupContent />
-        )}
+        <CollectionPopupContent
+          data={currentData}
+          setCollectionName={setCollectionName}
+          setCollectionDescription={setCollectionDescription}
+        />
         <Button
-          onClick={() =>
-            sendNewData({
-              currentCollectionData,
-              collectionName,
-              collectionDescription,
-              setIsShowPopup
-            })
-          } 
+          onClick={() => {
+            isEditing
+              ? editCollectionData({
+                currentData,
+                  collectionName,
+                  collectionDescription,
+                  setIsShowPopup
+                })
+              : addNewCollectionData({
+                  collectionName,
+                  collectionDescription,
+                  setIsShowPopup
+                });
+          }}
         >
           {isEditing ? "Edit" : "Create"}
         </Button>
@@ -116,12 +131,10 @@ const PopupComponent = ({
   );
 };
 
-PopupComponent.propTypes = {
+CollectionPopup.propTypes = {
   isEditing: PropTypes.bool,
-  isCollection: PropTypes.bool,
-  isBook: PropTypes.bool,
   setIsShowPopup: PropTypes.func,
-  currentCollectionData: PropTypes.object
+  currentData: PropTypes.object
 };
 
-export default PopupComponent;
+export default CollectionPopup;

@@ -4,6 +4,9 @@ body {
   font-family: sans-serif;
   background: #E2D4B7;
 }
+body.noscroll-class {
+  overflow: hidden; 
+}
 .fa-pencil-alt {
   color: #A4A9AD;
 }

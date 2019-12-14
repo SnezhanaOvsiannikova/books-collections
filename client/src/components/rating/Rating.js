@@ -24,12 +24,13 @@ const Icon = styled.i`
   }
 `;
 
-const Rating = ({ rating }) => (
+const Rating = ({ rating, onChange }) => (
   <RatingHolder>
     {[...Array(5).keys()].map((el, i) => (
       <Icon
         className={`${i < rating ? "fas" : "far"} fa-star`}
         key={`${el}-${i + 1}`}
+        onClick={() => onChange(i)}
       ></Icon>
     ))}
   </RatingHolder>

@@ -23,6 +23,7 @@ const CollectionPopupContent = ({
   setCollectionName,
   setCollectionDescription
 }) => {
+
   return (
     <Fragment>
       <InputHolder>
@@ -32,9 +33,10 @@ const CollectionPopupContent = ({
         <input
           id="name"
           type="text"
+          name="name"
           defaultValue={data.name}
           onChange={event => setCollectionName(event.target.value)}
-        ></input>
+        />
       </InputHolder>{" "}
       <InputHolder>
         <label htmlFor="description">

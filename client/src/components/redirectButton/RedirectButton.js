@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -12,17 +12,21 @@ const Button = styled.button`
   font-weight: 800;
 `;
 
-const RedirectButton = ({ path, text }) => {
+const RedirectButton = ({ path, text, state }) => {
   const history = useHistory();
+  const navigate = () => {
+    const options = {
+      pathname: path
+    };
 
-  return (
-  <Button onClick={() => history.push(path)}>{text}</Button>
-  );
+    history.push(state ? { ...options, state } : options);
+  };
+  return <Button onClick={navigate}>{text}</Button>;
 };
 
 RedirectButton.propTypes = {
   path: PropTypes.string,
-  text: PropTypes.string,
+  text: PropTypes.string
 };
 
 export default RedirectButton;
