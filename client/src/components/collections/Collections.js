@@ -115,7 +115,8 @@ const Collections = () => {
 };
 
 Collections.propTypes = {
-  collections: PropTypes.array
+  collections: PropTypes.array,
+  loading: PropTypes.bool
 };
 
 export default Collections;

@@ -25,21 +25,23 @@ const renderBooks = ({
   setIsEditing,
   setIsShowPopup,
   setCurrentData,
-  locationState={}
+  locationState = {}
 }) =>
-  booksData.map(el => (
-    <Book
-      key={el._id}
-      data={el}
-      setIsEditing={setIsEditing}
-      setIsShowPopup={setIsShowPopup}
-      setCurrentData={setCurrentData}
-      redirectFromCollection={locationState.redirectFromCollection}
-      collectionId={locationState.id}
-    />
-  ));
+  booksData.map(el => {
+    return (
+      <Book
+        key={el._id}
+        data={el}
+        setIsEditing={setIsEditing}
+        setIsShowPopup={setIsShowPopup}
+        setCurrentData={setCurrentData}
+        redirectFromCollection={locationState.redirectFromCollection}
+        collectionId={locationState.id}
+      />
+    )
+  });
 
-const Books = (props) => {
+const Books = props => {
   const { booksData } = useSelector(state => state.books);
   const [isShowPopup, setIsShowPopup] = useState(false);
   const [isEditing, setIsEditing] = useState(false);

@@ -26,7 +26,8 @@ const RedirectButton = ({ path, text, state }) => {
 
 RedirectButton.propTypes = {
   path: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
+  state: PropTypes.object
 };
 
 export default RedirectButton;

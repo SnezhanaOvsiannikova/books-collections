@@ -72,7 +72,10 @@ const BookPopupContent = ({
         />
       </InputHolder>
       <InputHolder>
-        <Rating rating={bookRating || data.rating} onChange={r => setBookRating(r + 1)}/>
+        <Rating
+          rating={bookRating || data.rating}
+          setRatingValue={r => setBookRating(r + 1)}
+        />
       </InputHolder>
     </Fragment>
   );
@@ -84,7 +87,7 @@ BookPopupContent.propTypes = {
   setBookAuthor: PropTypes.func,
   setBookPrice: PropTypes.func,
   setBookRating: PropTypes.func,
-  bookRating: PropTypes.string
+  bookRating: PropTypes.number
 };
 
 export default BookPopupContent;

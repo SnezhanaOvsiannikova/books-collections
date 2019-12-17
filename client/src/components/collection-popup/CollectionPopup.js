@@ -56,11 +56,7 @@ const CloseIcon = styled.i`
   top: 2%;
 `;
 
-const CollectionPopup = ({
-  isEditing,
-  setIsShowPopup,
-  currentData
-}) => {
+const CollectionPopup = ({ isEditing, setIsShowPopup, currentData }) => {
   const [collectionName, setCollectionName] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
   const dispatch = useDispatch();
@@ -112,7 +108,7 @@ const CollectionPopup = ({
           onClick={() => {
             isEditing
               ? editCollectionData({
-                currentData,
+                  currentData,
                   collectionName,
                   collectionDescription,
                   setIsShowPopup

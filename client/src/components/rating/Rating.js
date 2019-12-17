@@ -24,20 +24,25 @@ const Icon = styled.i`
   }
 `;
 
-const Rating = ({ rating, onChange }) => (
+const Rating = ({ rating, setRatingValue, onRatingClick }) => (
   <RatingHolder>
     {[...Array(5).keys()].map((el, i) => (
       <Icon
         className={`${i < rating ? "fas" : "far"} fa-star`}
         key={`${el}-${i + 1}`}
-        onClick={() => onChange(i)}
+        onClick={() => {
+          setRatingValue && setRatingValue(i);
+          onRatingClick && onRatingClick(i);
+        }}
       ></Icon>
     ))}
   </RatingHolder>
 );
 
 Rating.propTypes = {
-  rating: PropTypes.number
+  rating: PropTypes.number,
+  setRatingValue: PropTypes.func,
+  onRatingClick: PropTypes.func
 };
 
 export default Rating;

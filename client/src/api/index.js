@@ -45,7 +45,7 @@ export const deleteCollectionData = ({ id }) =>
     console.log(error);
   });
 
-export const addBookToCollectionData = ({ collectionId, bookId }) => {
+export const addBookToCollectionData = ({ collectionId, bookId }) =>
   fetch(`/api/collections/${collectionId}/books`, {
     method: "POST",
     headers: {
@@ -57,9 +57,8 @@ export const addBookToCollectionData = ({ collectionId, bookId }) => {
     .catch(error => {
       console.log(error);
     });
-};
 
-export const addBookData = ({ book }) => {
+export const addBookData = ({ book }) =>
   fetch(`/api/books/`, {
     method: "POST",
     headers: {
@@ -71,23 +70,30 @@ export const addBookData = ({ book }) => {
     .catch(error => {
       console.log(error);
     });
-};
 
-
-export const deleteBookData = ({ id }) => {
+export const deleteBookData = ({ id }) =>
   fetch(`/api/books/${id}`, {
     method: "DELETE"
-  })
-    .catch(error => {
-      console.log(error);
-    });
-};
+  }).catch(error => {
+    console.log(error);
+  });
 
-export const deleteBookDataFromCollection = ({ collectionId, bookId }) => {
+export const deleteBookDataFromCollection = ({ collectionId, bookId }) =>
   fetch(`/api/collections/${collectionId}/books/${bookId}`, {
     method: "DELETE"
+  }).catch(error => {
+    console.log(error);
+  });
+
+export const editBookData = ({ id, book }) =>
+  fetch(`/api/books/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify(book)
   })
+    .then(res => res.json())
     .catch(error => {
       console.log(error);
     });
-};

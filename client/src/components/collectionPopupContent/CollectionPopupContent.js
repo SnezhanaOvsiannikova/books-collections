@@ -23,7 +23,6 @@ const CollectionPopupContent = ({
   setCollectionName,
   setCollectionDescription
 }) => {
-
   return (
     <Fragment>
       <InputHolder>

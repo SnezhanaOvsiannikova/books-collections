@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import BookPopupContent from "../bookPopupContent/BookPopupContent";
-import { addBook } from "../../actions/books";
+import { addBook, editBook } from "../../actions/books";
 
 const PopupWrapper = styled.div`
   position: fixed;
@@ -60,23 +60,27 @@ const BookPopup = ({ isEditing, setIsShowPopup, currentData }) => {
   const [bookName, setBookName] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookPrice, setBookPrice] = useState("");
-  const [bookRating, setBookRating] = useState("");
+  const [bookRating, setBookRating] = useState(0);
   const dispatch = useDispatch();
 
-  // const editCollectionData = ({
-  //   currentData,
-  //   collectionName,
-  //   collectionDescription,
-  //   setIsShowPopup
-  // }) => {
-  //   dispatch(
-  //     editCollection(currentData._id, {
-  //       name: collectionName,
-  //       description: collectionDescription
-  //     })
-  //   );
-  //   setIsShowPopup(false);
-  // };
+  const editBookData = ({
+    currentData,
+    bookName,
+    bookAuthor,
+    bookPrice,
+    bookRating,
+    setIsShowPopup
+  }) => {
+    dispatch(
+      editBook(currentData._id, {
+        name: bookName || currentData.name,
+        author: bookAuthor || currentData.author,
+        price: bookPrice || currentData.price,
+        rating: bookRating || currentData.rating
+      })
+    );
+    setIsShowPopup(false);
+  };
 
   const addNewBookData = ({
     bookName,
@@ -85,15 +89,17 @@ const BookPopup = ({ isEditing, setIsShowPopup, currentData }) => {
     bookRating,
     setIsShowPopup
   }) => {
-    dispatch(
-      addBook({
-        name: bookName,
-        author: bookAuthor,
-        price: bookPrice,
-        rating: bookRating,
-      })
-    );
-    setIsShowPopup(false);
+    if (bookName && bookAuthor && bookPrice && bookRating) {
+      dispatch(
+        addBook({
+          name: bookName,
+          author: bookAuthor,
+          price: bookPrice,
+          rating: bookRating
+        })
+      );
+      setIsShowPopup(false);
+    }
   };
 
   return (
@@ -114,13 +120,14 @@ const BookPopup = ({ isEditing, setIsShowPopup, currentData }) => {
         <Button
           onClick={() => {
             isEditing
-              ? // editCollectionData({
-                //   currentData,
-                //     collectionName,
-                //     collectionDescription,
-                //     setIsShowPopup
-                //   })
-                console.log("isEditing")
+              ? editBookData({
+                  currentData,
+                  bookName,
+                  bookAuthor,
+                  bookPrice,
+                  bookRating,
+                  setIsShowPopup
+                })
               : addNewBookData({
                   bookName,
                   bookAuthor,

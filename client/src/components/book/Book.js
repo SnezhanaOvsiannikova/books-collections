@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -67,6 +67,7 @@ const Book = ({
   redirectFromCollection,
   collectionId
 }) => {
+  const [bookRating, setBookRating] = useState(data.rating);
   const dispatch = useDispatch();
   const { collections } = useSelector(state => state.collections);
   const collection = collections.find(c => c._id === collectionId) || {};
@@ -101,6 +102,10 @@ const Book = ({
       outline: none;
     }
   `;
+
+  useEffect(() => {
+    setBookRating(data.rating);
+  }, [data]);
 
   return (
     <BookItem>
@@ -148,7 +153,19 @@ const Book = ({
       <Price>
         <i className="fas fa-dollar-sign"></i> {data.price}
       </Price>
-      <Rating rating={data.rating} />
+      <Rating
+        rating={bookRating}
+        onRatingClick={(i) => {
+          setBookRating(i + 1);
+          showModal({
+            setIsShowPopup,
+            setIsEditing,
+            setCurrentData,
+            isCollectionPopupShow,
+            data: { ...data, rating: i + 1 }
+          })
+        }}
+      />
     </BookItem>
   );
 };
