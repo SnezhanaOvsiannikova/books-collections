@@ -56,6 +56,7 @@ const Books = props => {
     <Fragment>
       <ButtonHolder>
         <RedirectButton path="/" text="Home" />
+        {locationState && locationState.redirectFromCollection && <RedirectButton path={`/collection/${locationState.id}`} text="Back to collection" />}
         <AddingButton
           title="Add new book"
           setCurrentData={setCurrentData}

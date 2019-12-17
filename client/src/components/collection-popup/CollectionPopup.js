@@ -56,9 +56,32 @@ const CloseIcon = styled.i`
   top: 2%;
 `;
 
+const Error = styled.span`
+  color: red;
+  font-size: 14px;
+`;
+
+const isValid = ({
+  collectionName,
+  collectionDescription,
+  setValidationError
+}) => {
+  let errText = "";
+  if (!collectionName) {
+    errText = `Name is required.${"\n"}`;
+  }
+  if (!collectionDescription) {
+    errText = `${errText}Description is required.`;
+  }
+
+  setValidationError(errText);
+  return collectionName && collectionDescription;
+};
+
 const CollectionPopup = ({ isEditing, setIsShowPopup, currentData }) => {
   const [collectionName, setCollectionName] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
+  const [validationError, setValidationError] = useState(null);
   const dispatch = useDispatch();
 
   const editCollectionData = ({
@@ -81,7 +104,9 @@ const CollectionPopup = ({ isEditing, setIsShowPopup, currentData }) => {
     collectionDescription,
     setIsShowPopup
   }) => {
-    if (collectionName && collectionDescription) {
+    if (
+      isValid({ collectionName, collectionDescription, setValidationError })
+    ) {
       dispatch(
         addNewCollection({
           name: collectionName,
@@ -104,6 +129,7 @@ const CollectionPopup = ({ isEditing, setIsShowPopup, currentData }) => {
           setCollectionName={setCollectionName}
           setCollectionDescription={setCollectionDescription}
         />
+        {validationError && <Error>{validationError}</Error>}
         <Button
           onClick={() => {
             isEditing

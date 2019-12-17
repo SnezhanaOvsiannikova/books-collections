@@ -56,11 +56,33 @@ const CloseIcon = styled.i`
   top: 2%;
 `;
 
+const Error = styled.span`
+  color: red;
+  font-size: 14px;
+`;
+
+const isValid = ({ bookName, bookAuthor, bookPrice, setValidationError }) => {
+  let errText = "";
+  if (!bookName) {
+    errText = `Name is required.${"\n"}`;
+  }
+  if (!bookAuthor) {
+    errText = `${errText}Author is required.${"\n"}`;
+  }
+  if (!bookPrice) {
+    errText = `${errText}Price is required.`;
+  }
+
+  setValidationError(errText);
+  return bookName && bookAuthor && bookPrice;
+};
+
 const BookPopup = ({ isEditing, setIsShowPopup, currentData }) => {
   const [bookName, setBookName] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookPrice, setBookPrice] = useState("");
   const [bookRating, setBookRating] = useState(0);
+  const [validationError, setValidationError] = useState(null);
   const dispatch = useDispatch();
 
   const editBookData = ({
@@ -89,7 +111,14 @@ const BookPopup = ({ isEditing, setIsShowPopup, currentData }) => {
     bookRating,
     setIsShowPopup
   }) => {
-    if (bookName && bookAuthor && bookPrice && bookRating) {
+    if (
+      isValid({
+        bookName,
+        bookAuthor,
+        bookPrice,
+        setValidationError
+      })
+    ) {
       dispatch(
         addBook({
           name: bookName,
@@ -117,6 +146,7 @@ const BookPopup = ({ isEditing, setIsShowPopup, currentData }) => {
           setBookRating={setBookRating}
           bookRating={bookRating}
         />
+        {validationError && <Error>{validationError}</Error>}
         <Button
           onClick={() => {
             isEditing
